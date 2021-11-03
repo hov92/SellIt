@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-mongoose.connect(process.env.MONGODB_URL || 'mongodb://localhost/sellit', {
+mongoose.connect(process.env.MONGODB_URL || 'mongodb+srv://sellit:sellit@cluster0.sybdj.mongodb.net/SELL_IT?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
