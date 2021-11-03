@@ -51,7 +51,7 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5000;
 
 const httpServer = http.Server(app);
-const server = createServer(app); 
+const server = require('http').createServer(); 
 
 const io = new Server(httpServer, { cors: { origin: '*' } });
 const users = [];
