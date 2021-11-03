@@ -8,6 +8,8 @@ import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
 import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
+import { createServer } from 'http';
+
 
 dotenv.config();
 
@@ -49,6 +51,8 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 5000;
 
 const httpServer = http.Server(app);
+const server = createServer(app); 
+
 const io = new Server(httpServer, { cors: { origin: '*' } });
 const users = [];
 
