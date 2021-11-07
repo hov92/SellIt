@@ -8,6 +8,7 @@ import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
 import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
+import { createServer } from 'http'
 
 dotenv.config();
 
@@ -16,11 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.MONGODB_URL || 'mongodb+srv://sellit:sellit@cluster0.sybdj.mongodb.net/SELL_IT?retryWrites=true&w=majority'
-, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+  , {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  });
 app.use('/api/uploads', uploadRouter);
 app.use('/api/users', userRouter);
 app.use('/api/products', productRouter);
@@ -48,10 +49,11 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 8080;
 
 const httpServer = http.Server(app);
-const io = new Server(httpServer, { cors: { origin: '*' } });
+const server = createServer(app);
+const socketio = new Server(httpServer, { cors: { origin: '*' } });
 const users = [];
 
-io.on('connection', (socket) => {
+socketio.on('connection', (socket) => {
   console.log('connection', socket.id);
   socket.on('disconnect', () => {
     const user = users.find((x) => x.socketId === socket.id);
@@ -60,7 +62,7 @@ io.on('connection', (socket) => {
       console.log('Offline', user.name);
       const admin = users.find((x) => x.isAdmin && x.online);
       if (admin) {
-        io.to(admin.socketId).emit('updateUser', user);
+        socketio.to(admin.socketId).emit('updateUser', user);
       }
     }
   });
@@ -81,10 +83,10 @@ io.on('connection', (socket) => {
     console.log('Online', user.name);
     const admin = users.find((x) => x.isAdmin && x.online);
     if (admin) {
-      io.to(admin.socketId).emit('updateUser', updatedUser);
+      socketio.to(admin.socketId).emit('updateUser', updatedUser);
     }
     if (updatedUser.isAdmin) {
-      io.to(updatedUser.socketId).emit('listUsers', users);
+      socketio.to(updatedUser.socketId).emit('listUsers', users);
     }
   });
 
@@ -92,7 +94,7 @@ io.on('connection', (socket) => {
     const admin = users.find((x) => x.isAdmin && x.online);
     if (admin) {
       const existUser = users.find((x) => x._id === user._id);
-      io.to(admin.socketId).emit('selectUser', existUser);
+      socketio.to(admin.socketId).emit('selectUser', existUser);
     }
   });
 
@@ -100,17 +102,17 @@ io.on('connection', (socket) => {
     if (message.isAdmin) {
       const user = users.find((x) => x._id === message._id && x.online);
       if (user) {
-        io.to(user.socketId).emit('message', message);
+        socketio.to(user.socketId).emit('message', message);
         user.messages.push(message);
       }
     } else {
       const admin = users.find((x) => x.isAdmin && x.online);
       if (admin) {
-        io.to(admin.socketId).emit('message', message);
+        socketio.to(admin.socketId).emit('message', message);
         const user = users.find((x) => x._id === message._id && x.online);
         user.messages.push(message);
       } else {
-        io.to(socket.id).emit('message', {
+        socketio.to(socket.id).emit('message', {
           name: 'Admin',
           body: 'Sorry. I am not online right now',
         });
