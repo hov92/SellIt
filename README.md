@@ -1,7 +1,4 @@
 # Sellit ECommerce Website
-![sellit](/template/images/sellit.jpg)
-
-# React & Node Tutorial - Full ECommerce in 9 Hours [2021]
 Welcome! This MERN application is a fully-functional e-commerce website.
 
 ## Website
