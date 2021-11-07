@@ -22,26 +22,19 @@ Welcome! This MERN application is a fully-functional e-commerce website.
 ## Run Locally
 
 
-```
-
-
-### 3. Run Backend
-
-```
+### 1.
+cd Backend
 $ npm install
 $ npm start
-```
 
-### 4. Run Frontend
 
-```
+### 2. 
 # open new terminal
 $ cd frontend
 $ npm install
 $ npm start
-```
 
-### 5. Seed Users and Products
+### 3.
 
 - Run this on chrome: http://localhost:8080/api/users/seed
 - It returns admin email and password
