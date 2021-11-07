@@ -21,15 +21,15 @@ Welcome! This MERN application is a fully-functional e-commerce website.
 
 ### 1.
 cd Backend
-$ npm install
-$ npm start
+- npm install
+- npm start
 
 
 ### 2. 
 # open new terminal
-$ cd frontend
-$ npm install
-$ npm start
+- cd frontend
+- npm install
+- npm start
 
 ### 3.
 
