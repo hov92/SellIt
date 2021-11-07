@@ -5,7 +5,7 @@
   "description": "Promote your business on SellIt!",
   "main": "index.js",
   "scripts": {
-    "build": "npm start && cd frontend && npm install && npm run build",
+    "build": "cd backend && npm start && cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules backend/server.js"
   },
   "repository": {
@@ -33,5 +33,9 @@
     "eslint": "^7.9.0",
     "eslint-plugin-react": "^7.21.2",
     "nodemon": "^2.0.4"
+  },
+  "engines": {
+    "node": "12.4.0",
+    "npm": "6.9.0"
   }
 }
