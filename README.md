@@ -6,7 +6,7 @@ Welcome! This MERN application is a fully-functional e-commerce website.
 - 👉 Heroku : [https://react-sellit.herokuapp.com](https://react-sellit.herokuapp.com)
 
 
-## You Will Learn
+## TOOLS
 
 - HTML5 and CSS3: Semantic Elements, CSS Grid, Flexbox
 - React: Components, Props, Events, Hooks, Router, Axios
