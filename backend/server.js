@@ -8,7 +8,7 @@ import productRouter from './routers/productRouter.js';
 import userRouter from './routers/userRouter.js';
 import orderRouter from './routers/orderRouter.js';
 import uploadRouter from './routers/uploadRouter.js';
-import { createServer } from 'http'
+// import { createServer } from 'http'
 // import { io } from "socket.io-client";
 
 dotenv.config();
@@ -49,7 +49,7 @@ app.use((err, req, res, next) => {
 
 const port = process.env.PORT || 8080;
 
-const httpServer = createServer();
+const httpServer = http.Server(app);
 const io = new Server(httpServer, { cors: { origin: '*' } });
 const users = [];
 
